@@ -21,6 +21,6 @@ class Person:
 person = Person("Олег", 25)
 print(person.age)  # 25
 person.age = '30'  # Оновлення значення
-print(person.age)  # 30
 person.age = -5  # Виведе повідомлення про помилку
-print(person.age)  #30
+print(person.age)
+print(person.age) #30
