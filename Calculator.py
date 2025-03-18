@@ -1,51 +1,37 @@
-import math
+import tkinter as tk
 
+def on_button_click(value):
+    if value == "=":
+        try:
+            result = eval(entry_var.get())
+            entry_var.set(result)
+        except Exception as e:
+            entry_var.set("Error")
+    elif value == "Clear":
+        entry_var.set("")
+    else:
+        entry_var.set(entry_var.get() + str(value))
 
+root = tk.Tk()
+root.title("Калькулятор")
+root.configure(bg="yellow")
+root.resizable(0, 0)
 
-def calculator():
-    while True:
-        print("\nОберіть операцію:")
-        print("1. Додавання (+)")
-        print("2. Віднімання (-)")
-        print("3. Множення (*)")
-        print("4. Ділення (/)")
-        print("5. Зведення у ступінь (^)")
-        print("6. Добування кореня (√)")
-        print("7. Вийти")
+entry_var = tk.StringVar()
+entry = tk.Entry(root, textvariable=entry_var, font=("Arial", 24), bg="lightgreen", justify="right")
+entry.grid(row=0, column=0, columnspan=4, ipadx=40, ipady=5)
 
-        choice = input("Введіть номер операції: ")
+buttons = [
+    ("1", 1, 0), ("2", 1, 1), ("3", 1, 2), ("+", 1, 3),
+    ("4", 2, 0), ("5", 2, 1), ("6", 2, 2), ("-", 2, 3),
+    ("7", 3, 0), ("8", 3, 1), ("9", 3, 2), ("*", 3, 3),
+    ("0", 4, 0), (".", 4, 1), ("Clear", 4, 2), ("/", 4, 3),
+    ("=", 5, 2)
+]
 
-        if choice == '7':
-            print("Калькулятор завершив роботу.")
-            break
+for (text, row, col) in buttons:
+    btn = tk.Button(root, text=text, font=("Arial", 18), bg="blue", fg="white",
+                    width=6, height=2, command=lambda t=text: on_button_click(t))
+    btn.grid(row=row, column=col, padx=5, pady=5)
 
-        if choice in ('1', '2', '3', '4', '5'):
-            num1 = float(input("Введіть перше число: "))
-            num2 = float(input("Введіть друге число: "))
-
-            if choice == '1':
-                print(f"Результат: {num1 + num2}")
-            elif choice == '2':
-                print(f"Результат: {num1 - num2}")
-            elif choice == '3':
-                print(f"Результат: {num1 * num2}")
-            elif choice == '4':
-                if num2 != 0:
-                    print(f"Результат: {num1 / num2}")
-                else:
-                    print("Помилка: ділення на нуль!")
-            elif choice == '5':
-                print(f"Результат: {num1 ** num2}")
-
-
-        elif choice == '6':
-            num = float(input("Введіть число: "))
-            if num >= 0:
-                print(f"Результат: {math.sqrt(num)}")
-            else:
-                print("Помилка: не можна обчислити корінь з від’ємного числа!")
-
-        else:
-            print("Неправильний вибір, спробуйте ще раз.")
-
-calculator()
+root.mainloop()
